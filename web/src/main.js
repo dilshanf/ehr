@@ -1,13 +1,30 @@
-import Button from "primevue/button";
-import PrimeVue from "primevue/config";
-import InputText from "primevue/inputtext";
-import { createApp } from "vue";
-import App from "./App.vue";
-import "./assets/tailwind.css";
-import "./style.css";
+import { createApp } from 'vue';
+import App from './App.vue';
+import router from './router';
+
+import { createPinia } from 'pinia';
+import Aura from '@primevue/themes/aura';
+import PrimeVue from 'primevue/config';
+import ConfirmationService from 'primevue/confirmationservice';
+import ToastService from 'primevue/toastservice';
+
+import '@/assets/styles.scss';
+import '@/assets/tailwind.css';
 
 const app = createApp(App);
-app.component("InputText", InputText);
-app.component("Button", Button);
-app.use(PrimeVue, { theme: "none" });
-app.mount("#app");
+const pinia = createPinia();
+
+app.use(router);
+app.use(PrimeVue, {
+    theme: {
+        preset: Aura,
+        options: {
+            darkModeSelector: '.app-dark'
+        }
+    }
+});
+app.use(pinia);
+app.use(ToastService);
+app.use(ConfirmationService);
+
+app.mount('#app');

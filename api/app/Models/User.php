@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function preferences()
+    {
+        return $this->hasOne(UserPreferences::class, 'user_id', 'id');
+    }
 }
