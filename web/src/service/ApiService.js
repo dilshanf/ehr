@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useUserStore } from '@/store/user';
+import Cookies from 'js-cookie';
 
 // Create an Axios instance with a base URL
 
@@ -10,25 +11,31 @@ export const loginUser = async (email, password) => {
 
     var apiClient = axios.create({
         baseURL: 'http://localhost:8000',
-        withCredentials: false
+        withCredentials: true
       });
 
     const userStore = useUserStore()
     // Fetch CSRF cookie
     await apiClient.get('/sanctum/csrf-cookie')
-
+    const xsrfToken = Cookies.get('XSRF-TOKEN');
     const response = await apiClient
-        .post("/api/auth/login", {
-            withCredentials: true,
-            email: email,
-            password: password
-        })
-        userStore.setUserDetails(response)
+      .post("/login", {
+          email: email,
+          password: password
+      },{
+        headers: {
+          "Accept": "application/json",  // Common header for Laravel
+          "X-XSRF-TOKEN": xsrfToken
+        }
+      })
+      userStore.setUserDetails(response)
 
-        const response1 = await apiClient
-        .get("/api/users", {
-            withCredentials: true
-        })
+      const response1 = await apiClient
+      .get("/users", {
+          withCredentials: true
+      })
+
+    
 
     return response.data; // Return response data to the component
   } catch (error) {

@@ -12,6 +12,7 @@
         "@vueuse/core": "^12.3.0",
         "axios": "^1.7.9",
         "chart.js": "3.3.2",
+        "js-cookie": "^3.0.5",
         "pinia": "^2.3.0",
         "primeicons": "^7.0.0",
         "primevue": "^4.2.4",
