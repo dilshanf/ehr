@@ -3,10 +3,14 @@ import { UserService } from '@/service/UserService';
 import { FilterMatchMode } from '@primevue/core/api';
 import { useToast } from 'primevue/usetoast';
 import { onMounted, ref } from 'vue';
+import { getUsers } from '@/service/ApiService';
 
 onMounted(() => {
     UserService.getUsers().then((data) => (users.value = data));
 });
+
+const response = await getUsers();
+console.log(response)
 
 const toast = useToast();
 const dt = ref();

@@ -11,7 +11,7 @@ class UserController extends Controller
     public function get(): JsonResponse
     {
         return response()->json([
-            'users' => User::get(),
+            'users' => 'success'
         ]);
     }
 }
