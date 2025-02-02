@@ -1,18 +1,17 @@
 import axios from "axios";
 import { useUserStore } from '@/store/user';
 import Cookies from 'js-cookie';
+import router from '../router';
 
-// Create an Axios instance with a base URL
+const apiClient = axios.create({
+  baseURL: import.meta.env.VITE_APP_SANCTUM_API_URL,
+  withCredentials: true
+});
 
 
 // Function to login
 export const loginUser = async (email, password) => {
   try {
-
-    var apiClient = axios.create({
-        baseURL: 'http://localhost:8000',
-        withCredentials: true
-      });
 
     const userStore = useUserStore()
     // Fetch CSRF cookie
@@ -30,27 +29,28 @@ export const loginUser = async (email, password) => {
       })
       userStore.setUserDetails(response)
 
-      const response1 = await apiClient
-      .get("/users", {
-          withCredentials: true
-      })
-
-    
-
     return response.data; // Return response data to the component
   } catch (error) {
     throw error.response ? error.response.data : error;
   }
 };
 
-export const getUsers = async (email, password) => {
+export const getPagedUsers = async (params) => {
+
+  params = JSON.parse(params.lazyEvent);
+
     try {
   
+      var data = null;
       const response = await apiClient
-          .get("/api/users")
+          .get("/users", { params })
+          .then((res) => data = res.data.data)
   
-      return response.data; // Return response data to the component
+      return data; // Return response data to the component
     } catch (error) {
+      if(error.status === 401) {
+        router.push('/expired');
+      }
       throw error.response ? error.response.data : error;
     }
   };

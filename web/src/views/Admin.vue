@@ -4,7 +4,7 @@ import NotificationsWidget from '@/components/dashboard/NotificationsWidget.vue'
 import RecentSalesWidget from '@/components/dashboard/RecentSalesWidget.vue';
 import RevenueStreamWidget from '@/components/dashboard/RevenueStreamWidget.vue';
 import StatsWidget from '@/components/dashboard/StatsWidget.vue';
-import {useUserStore} from "@/store/user.js";
+import { useUserStore } from "@/store/user.js";
 import { useRouter, useRoute } from 'vue-router';
 
 const userStore = useUserStore()

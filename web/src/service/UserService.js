@@ -1,3 +1,6 @@
+
+import { getPagedUsers } from '@/service/ApiService'; 
+
 export const UserService = {
     getUsersData() {
         return [
@@ -1206,8 +1209,9 @@ export const UserService = {
         return Promise.resolve(this.getUsersData().slice(0, 10));
     },
 
-    getUsers() {
-        return Promise.resolve(this.getUsersData());
+    getUsers(data) {
+        // return response.data;
+        return Promise.resolve(getPagedUsers(data));
     },
 
     getUsersWithOrdersSmall() {
