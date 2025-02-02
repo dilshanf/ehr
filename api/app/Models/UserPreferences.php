@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserPreferences extends Model
 {
-    public $connection = 'userdata';
     public $timestamps = false;
 
     protected $fillable = [
